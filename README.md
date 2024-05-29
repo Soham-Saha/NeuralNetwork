@@ -2,4 +2,4 @@ A simple MLP (Multi-Layer Percepetron) framework built in Java with no external 
 
 Implements rudimentary single sample SGD (Stochastic Gradient Descent) with backpropagation.
 
-Tested on MNIST: 81.62% approximate accuracy.
+This framework was tested to create an MLP for the MNIST project, where it attained 81.62% accuracy.
