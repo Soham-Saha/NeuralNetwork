@@ -1,7 +1,9 @@
+//This test doesn't work as of now
+
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DQN {
+public class DQN_Test {
 
 	static State currentState;
 	static Sequential tmpNet;
