@@ -37,7 +37,7 @@ public class Trainer {
 		// through the activation
 		double[][] layerOutputs = new double[layers.length][];
 		double[] currentArray = input;
-		for (int i = 0; i < layers.length - 1; i++) {
+		for (int i = 0; i <= layers.length - 2; i++) {
 			double[] newArray = new double[layers[i + 1].numNodes];
 			double[][] edgeWeightsNow = edges[i].edgeWeights;
 			double[] biasesNow = layers[i + 1].getBiases();
@@ -53,10 +53,16 @@ public class Trainer {
 			}
 			currentArray = newArray;
 		}
+
 		double[] nextLayerGrads = new double[layers[layers.length - 1].numNodes];// grads of layer after layerCt layer
 		for (int i = 0; i < nextLayerGrads.length; i++) {
 			// Derivative of error with respect to i^th output
 			nextLayerGrads[i] = errorfunc.derivative(target, layerOutputs[layers.length - 1], i);
+		}
+		// The next for-loop is a late addition. It updates the biases of the last
+		// layer based on the gradients of the last layer.
+		for (int i = 0; i < layers[layers.length - 1].numNodes; i++) {
+			neuralNet.changeBiasBy(layers.length - 1, i, -learningRate * nextLayerGrads[i] * layers[layers.length - 1].activation.derivative(layerOutputs[layers.length - 1][i]));
 		}
 		for (int layerCt = layers.length - 2; layerCt >= 0; layerCt--) {
 			for (int i = 0; i < layers[layerCt].numNodes; i++) {
@@ -73,7 +79,8 @@ public class Trainer {
 				}
 			}
 			nextLayerGrads = newNextLayerGrads;
-			// As of this codepoint, nextLayerGrads are actually currentLayerGrads,
+			// As of this codepoint, nextLayerGrads are actually currentLayerGrads for this
+			// iteration
 			// as they are meant to be used in the next iteration. So:
 			// Bias gradients actually depend on gradients of the layer they are at, not the
 			// next layer. So using nextLayerGrads here actually has the functionality of
@@ -81,6 +88,7 @@ public class Trainer {
 			// supposed to be used for the next iteration of layerCt. By using it right
 			// here,... well you get the gist.
 			// Note from future self: The above comment was meant to be comprehensible?
+			// Note from even more future self: Read it properly, it is perfect.
 			if (layerCt != 0) {
 				for (int i = 0; i < layers[layerCt].numNodes; i++) {
 					neuralNet.changeBiasBy(layerCt, i, -learningRate * nextLayerGrads[i] * layers[layerCt].activation.derivative(layerOutputs[layerCt][i]));

@@ -112,10 +112,9 @@ public class MNIST_Test {
 			}
 		});
 		anim.display();
-		double[] input = new double[784];
 		while (true) {
-			Thread.sleep(1000 / 16);
 			anim.drawNow();
+			Thread.sleep(1000 / 16);
 		}
 	}
 

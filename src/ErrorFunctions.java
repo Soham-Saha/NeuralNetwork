@@ -1,5 +1,6 @@
 public enum ErrorFunctions {
 	MEAN_SQUARED_ERROR,
+
 	/**
 	 * Utilizes softmax inside itself. So output prediction will need to use softmax
 	 * separately

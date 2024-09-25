@@ -77,7 +77,7 @@ public class Sequential implements Serializable {
 			throw new IllegalArgumentException("Input shape doesn't match network input shape.");
 		}
 		double[] currentArray = input;
-		for (int i = 0; i < layers.length - 1; i++) {
+		for (int i = 0; i <= layers.length - 2; i++) {
 			double[] newArray = new double[layers[i + 1].numNodes];
 			double[][] edgeWeightsNow = edges[i].edgeWeights;
 			double[] biasesNow = layers[i + 1].getBiases();
